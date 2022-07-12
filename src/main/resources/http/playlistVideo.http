@@ -1,0 +1,36 @@
+###
+
+GET localhost:8080/playlistVideo/pagination?page=1&size=10
+
+
+###
+POST localhost:8080/playlistVideo/adm/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2MDQyNjgsImV4cCI6MTY1NzgyMDI2OCwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.qeaQiE0s_5_l_WEuF17BIDfR3jX1TH0FKnPbazdHOAM
+
+{
+  "playlist": 1,
+  "video": "402866d181f0fc820181f11373530001",
+  "orderNum": 1
+}
+
+###
+
+GET http://localhost:8080/playlistVideo/adm/list
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2MDQyNjgsImV4cCI6MTY1NzgyMDI2OCwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.qeaQiE0s_5_l_WEuF17BIDfR3jX1TH0FKnPbazdHOAM
+
+
+###
+
+PUT http://localhost:8080/playlistVideo/adm/update/Musiqa
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2MDQyNjgsImV4cCI6MTY1NzgyMDI2OCwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.qeaQiE0s_5_l_WEuF17BIDfR3jX1TH0FKnPbazdHOAM
+
+{
+  "name": "Mp3"
+}
+
+###
+
+DELETE http://localhost:8080/playlistVideo/adm/delete/9
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2MDQyNjgsImV4cCI6MTY1NzgyMDI2OCwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.qeaQiE0s_5_l_WEuF17BIDfR3jX1TH0FKnPbazdHOAM

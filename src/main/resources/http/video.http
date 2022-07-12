@@ -1,0 +1,65 @@
+POST localhost:8080/video/user/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2MDQyNjgsImV4cCI6MTY1NzgyMDI2OCwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.qeaQiE0s_5_l_WEuF17BIDfR3jX1TH0FKnPbazdHOAM
+
+{
+  "name": "Programming",
+  "attach" : "4028dfd181d26c2a0181d26c7d4d0000",
+  "channel" : "402866d181f0e8fa0181f0eab1430000",
+  "description": "Programming language",
+  "review": "4028dfd181d26c2a0181d26c7d4d0000",
+  "key" : "program",
+  "title": "siteWeb",
+  "category": "MultFilm",
+  "type": "PUBLIC"
+}
+
+###
+
+GET http://localhost:8080/video/user/list
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2MDQyNjgsImV4cCI6MTY1NzgyMDI2OCwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.qeaQiE0s_5_l_WEuF17BIDfR3jX1TH0FKnPbazdHOAM
+
+###
+
+GET http://localhost:8080/video/public/byId/402866d181f0e8fa0181f0eab1430000
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2MDQyNjgsImV4cCI6MTY1NzgyMDI2OCwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.qeaQiE0s_5_l_WEuF17BIDfR3jX1TH0FKnPbazdHOAM
+
+
+###
+
+PUT http://localhost:8080/video/ownUser/update/Musiqa
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTcwODQ4OTIsImV4cCI6MTY1NzMwMDg5MiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.BcNzBwb9Sr2WYEoTwGz9PkBJlGskKeDPPbS5uAsFBsk
+
+{
+  "name": "Mp3"
+}
+
+###
+
+PUT http://localhost:8080/video/adm/update/Musiqa
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTcwODQ4OTIsImV4cCI6MTY1NzMwMDg5MiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.BcNzBwb9Sr2WYEoTwGz9PkBJlGskKeDPPbS5uAsFBsk
+
+{
+  "name": "Mp3"
+}
+
+###
+
+PUT http://localhost:8080/video/adm/update/Musiqa
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTcwODQ4OTIsImV4cCI6MTY1NzMwMDg5MiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.BcNzBwb9Sr2WYEoTwGz9PkBJlGskKeDPPbS5uAsFBsk
+
+{
+  "name": "Mp3"
+}
+
+###
+
+DELETE http://localhost:8080/video/adm/delete/9
+Authorization: Bearer
+
+###
+
+GET localhost:8080/video/admin/pagination?page=0&size=10
