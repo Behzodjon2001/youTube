@@ -15,15 +15,13 @@ public class ChannelDTO {
 
     private String attach;
 
-
     private String description;
-
 
     private ChannelStatus status=ChannelStatus.ACTIVE;
 
-    private AttachEntity banner;
+    private String banner;
 
-    private ProfileEntity profile;
+    private Integer profile;
 
     private Boolean visible = Boolean.TRUE;
 

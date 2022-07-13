@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 public class VideoTagDTO {
     private Integer id;
 
-    private VideoEntity video;
+    private String video;
 
-    private TagEntity tag;
+    private Integer tag;
 
     private LocalDateTime createdDate;
 }

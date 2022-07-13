@@ -34,8 +34,8 @@ public class PlaylistController {
     }
 
     @ApiOperation(value = "Playlist update", notes="Method for Playlist update")
-    @PutMapping("/ownUser/fullUpdate{id}")
-    public ResponseEntity<?> fullUpdate(@PathVariable Integer id, @RequestBody PlaylistDTO dto) {
+    @PutMapping("/ownUser/fullUpdate/{id}")
+    public ResponseEntity<?> fullUpdate(@PathVariable("id") Integer id, @RequestBody PlaylistDTO dto) {
         log.info("Request for update {}" , dto);
 //        Integer profileId = HttpHeaderUtil.getId(request, ProfileRole.MODERATOR);
         PlaylistEntity channel = playlistService.fullUpdate(id, dto);
@@ -43,7 +43,7 @@ public class PlaylistController {
     }
 
     @ApiOperation(value = "Playlist update", notes="Method for Playlist update")
-    @PutMapping("/AOU/changStatus{id}")
+    @PutMapping("/OU/changStatus/{id}")
     public ResponseEntity<?> changStatus(@PathVariable Integer id) {
         log.info("Request for update {}" , id);
 //        Integer profileId = HttpHeaderUtil.getId(request, ProfileRole.MODERATOR);
@@ -53,9 +53,17 @@ public class PlaylistController {
 
 //    @ApiOperation(value = "list By Playlist", notes="Method for list By Playlist")
 //    @GetMapping("/public/byId/{id}")
-//    public ResponseEntity<?> listById(@PathVariable("id") String id) {
+//    public ResponseEntity<?> listById(@PathVariable("id") Integer id) {
 //        log.info("Request for listByCategory {}" , id);
-//        Optional<PlaylistDTO> list = playlistService.listById(id);
+//        PlaylistDTO list = playlistService.listById(id);
+//        return ResponseEntity.ok().body(list);
+//    }
+//
+//    @ApiOperation(value = "list By Playlist", notes="Method for list By Playlist")
+//    @GetMapping("/public/byId/{id}")
+//    public ResponseEntity<?> listCurrentUser() {
+//        log.info("Request for listByCategory {}");
+//        PlaylistDTO list = playlistService.listCurrentUser(CurrentUser.getCurrentUser().getProfile().getId());
 //        return ResponseEntity.ok().body(list);
 //    }
 //
@@ -67,8 +75,8 @@ public class PlaylistController {
 //        return ResponseEntity.ok().body(list);
 //    }
 
-    @DeleteMapping("/adm/delete")
-    public ResponseEntity<?> delete(@RequestHeader("Content-ID") Integer id) {
+    @DeleteMapping("/AOU/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         log.info("Request for delete {}" , id);
 //        HttpHeaderUtil.getId(request, ProfileRole.ADMIN);
         playlistService.delete(id);

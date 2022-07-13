@@ -20,7 +20,7 @@ public class VideoTagController {
     @Autowired
     private VideoTagService videoTagService;
 
-    @PostMapping("/adm/create")
+    @PostMapping("/userOwn/create")
     public ResponseEntity<?> create(@RequestBody VideoTagDTO dto) {
         log.info("Request for create {}" , dto);
 //        HttpHeaderUtil.getId(request, ProfileRole.ADMIN);
@@ -28,23 +28,15 @@ public class VideoTagController {
         return ResponseEntity.ok().body(categoryDTO);
     }
 
-    @GetMapping("/adm/list")
-    public ResponseEntity<?> list() {
+    @GetMapping("/public/list/{id}")
+    public ResponseEntity<?> list(@PathVariable("id") String videoId) {
         log.info("Request for list {}");
 //        HttpHeaderUtil.getId(request, ProfileRole.ADMIN);
-        List<VideoTagDTO> list = videoTagService.list();
+        List<VideoTagDTO> list = videoTagService.list(videoId);
         return ResponseEntity.ok().body(list);
     }
 
-    @PutMapping("/adm/update/{key}")
-    public ResponseEntity<?> update(@PathVariable Integer id,@RequestBody VideoTagDTO dto) {
-        log.info("Request for update {}" , dto, id);
-//        HttpHeaderUtil.getId(request, ProfileRole.ADMIN);
-        videoTagService.update(dto,id);
-        return ResponseEntity.ok().body("Successfully updated");
-    }
-
-    @DeleteMapping("/adm/delete/{id}")
+    @DeleteMapping("/userOwn/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         log.info("Request for delete {}" , id);
 //        HttpHeaderUtil.getId(request, ProfileRole.ADMIN);

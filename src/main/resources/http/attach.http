@@ -10,25 +10,24 @@ Content-Disposition: form-data; name="file"; filename="videoplayback.mp4"
 
 POST http://localhost:8080/attach/admUser/upload
 Content-Type: multipart/form-data; boundary=WebAppBoundary
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTcwOTA1MTAsImV4cCI6MTY1NzMwNjUxMCwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.P9PN81VIGV0YBjgsWBfBqYUS3ZEjXfngt-EYFIAfWaM
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2ODcxNDIsImV4cCI6MTY1NzkwMzE0MiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo4LCJyb2xlIjoiUk9MRV9VU0VSIn0.cU5c2eHiG28hvON3D7PFjccZI3-lShjDaquKxFm8aYI
 
 --WebAppBoundary
-Content-Disposition: form-data; name="file"; filename="videoTest.mp4"
+Content-Disposition: form-data; name="file"; filename="lanbargine.jpg"
 
-< C:\Users\Acer\Downloads\videoTest.mp4
+< C:\Users\Acer\Downloads\lanbargine.jpg
 
 
 
- "tagList": [
-    "sotsial",
-    "d2as"
-  ]
+# "tagList": [
+#    "sotsial",
+#    "d2as"
+#  ]
 
 ###
 
 GET localhost:8080/attach/admUser/pagination?page=0&size=10
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTcwOTA1MTAsImV4cCI6MTY1NzMwNjUxMCwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.P9PN81VIGV0YBjgsWBfBqYUS3ZEjXfngt-EYFIAfWaM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2ODcxNDIsImV4cCI6MTY1NzkwMzE0MiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo4LCJyb2xlIjoiUk9MRV9VU0VSIn0.cU5c2eHiG28hvON3D7PFjccZI3-lShjDaquKxFm8aYI
 ###
 GET localhost:8080/attach/all/open_general/c0f20d4d-2f49-414e-9648-0fceeb762b3b
 

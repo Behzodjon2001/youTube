@@ -17,11 +17,11 @@ public class CommentDTO {
 
     private LocalDateTime updateDate;
 
-    private ProfileDTO profile;
+    private Integer profile;
 
     private String video;
 
-    private CommentDTO reply;
+    private Integer reply;
 
     private String content;
 

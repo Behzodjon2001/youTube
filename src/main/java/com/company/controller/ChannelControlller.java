@@ -34,7 +34,7 @@ public class ChannelControlller {
     }
 
     @ApiOperation(value = "Channel update", notes="Method for Channel update")
-    @PutMapping("/ownUser/fullUpdate{id}")
+    @PutMapping("/ownUser/fullUpdate/{id}")
     public ResponseEntity<?> fullUpdate(@PathVariable String id, @RequestBody ChannelDTO dto) {
         log.info("Request for update {}" , dto);
 //        Integer profileId = HttpHeaderUtil.getId(request, ProfileRole.MODERATOR);
@@ -43,7 +43,7 @@ public class ChannelControlller {
     }
 
     @ApiOperation(value = "Channel update", notes="Method for Channel update")
-    @PutMapping("/ownUser/attachUpdate{id}")
+    @PutMapping("/ownUser/attachUpdate/{id}")
     public ResponseEntity<?> attachUpdate(@PathVariable String id, @RequestBody ChannelDTO dto) {
         log.info("Request for update {}" , dto);
 //        Integer profileId = HttpHeaderUtil.getId(request, ProfileRole.MODERATOR);
@@ -52,7 +52,7 @@ public class ChannelControlller {
     }
 
     @ApiOperation(value = "Channel update", notes="Method for Channel update")
-    @PutMapping("/ownUser/bannerUpdate{id}")
+    @PutMapping("/ownUser/bannerUpdate/{id}")
     public ResponseEntity<?> bannerUpdate(@PathVariable String id, @RequestBody ChannelDTO dto) {
         log.info("Request for update {}" , dto);
 //        Integer profileId = HttpHeaderUtil.getId(request, ProfileRole.MODERATOR);
@@ -61,7 +61,7 @@ public class ChannelControlller {
     }
 
     @ApiOperation(value = "Channel update", notes="Method for Channel update")
-    @PutMapping("/AOU/changStatus{id}")
+    @PutMapping("/AOU/changStatus/{id}")
     public ResponseEntity<?> changStatus(@PathVariable String id) {
         log.info("Request for update {}" , id);
 //        Integer profileId = HttpHeaderUtil.getId(request, ProfileRole.MODERATOR);
@@ -81,7 +81,7 @@ public class ChannelControlller {
     @GetMapping("/user/list")
     public ResponseEntity<?> listByType() {
         log.info("Request for listByType {}"  );
-        List<ChannelDTO> list = channelService.list(CurrentUser.getCurrentUser().getProfile().getId());
+        List<ChannelDTO> list = channelService.list(CurrentUser.getCurrentUser().getProfile());
         return ResponseEntity.ok().body(list);
     }
 

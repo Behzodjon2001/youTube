@@ -28,4 +28,6 @@ public class PlaylistDTO {
     private String review;
 
     private Boolean visible;
+
+    private Integer orderNum;
 }

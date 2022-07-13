@@ -42,4 +42,7 @@ public class PlaylistEntity {
 
     @Column
     private Boolean visible=true;
+
+    @Column
+    private Integer orderNum;
 }

@@ -8,6 +8,7 @@ import com.company.entity.PlaylistEntity;
 import com.company.entity.video.VideoEntity;
 import com.company.entity.ProfileEntity;
 import com.company.entity.attach.AttachEntity;
+import com.company.enums.PlaylistStatus;
 import com.company.enums.VideoStatus;
 import com.company.exception.BadRequestException;
 import com.company.exception.ItemNotFoundException;
@@ -76,15 +77,14 @@ public class VideoService {
         Optional<VideoEntity> optional = videoRepository.findByKey(id);
         if (optional.isEmpty()) {
             log.error("Video not found {}" , id);
-            throw new ItemNotFoundException("This channel not found!");
+            throw new ItemNotFoundException("This video not found!");
         }
         VideoEntity entity = optional.get();
 
         entity.setTitle(dto.getTitle());
         entity.setKey(dto.getKey());
         entity.setDescription(dto.getDescription());
-        entity.setCreatedDate(LocalDateTime.now());
-        entity.setPublishedDate(null);
+        entity.setPublishedDate(LocalDateTime.now());
         entity.setType(dto.getType());
 
         AttachEntity attach = attachService.get(dto.getAttach());
@@ -102,24 +102,28 @@ public class VideoService {
         return videoRepository.save(entity);
     }
 
-    public VideoEntity changeVideoStatus(String id, VideoDTO dto) {
+    public VideoEntity changeVideoStatus(String id) {
         Optional<VideoEntity> optional = videoRepository.findByKey(id);
         if (optional.isEmpty()) {
             log.error("Video not found {}" , id);
-            throw new ItemNotFoundException("This channel not found!");
+            throw new ItemNotFoundException("This video not found!");
         }
-        VideoEntity entity = optional.get();
+        VideoEntity video = optional.get();
 
-        entity.setStatus(dto.getStatus());
+        if (video.getStatus().equals(VideoStatus.PUBLIC)) {
+            video.setStatus(VideoStatus.PRIVATE);
+        } else {
+            video.setStatus(VideoStatus.PUBLIC);
+        }
 
-        return videoRepository.save(entity);
+        return videoRepository.save(video);
     }
 
     public VideoEntity IncreaseVideoViewCountByKey(String id) {
         Optional<VideoEntity> optional = videoRepository.findByKey(id);
         if (optional.isEmpty()) {
             log.error("Video not found {}" , id);
-            throw new ItemNotFoundException("This channel not found!");
+            throw new ItemNotFoundException("This video not found!");
         }
         VideoEntity entity = optional.get();
 

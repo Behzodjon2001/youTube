@@ -32,26 +32,26 @@ public class VideoController {
     }
 
     @ApiOperation(value = "Video update", notes = "Method for Video update")
-    @PutMapping("/ownUser/fullUpdate{id}")
-    public ResponseEntity<?> fullUpdate(@PathVariable String id, @RequestBody VideoDTO dto) {
+    @PutMapping("/ownUser/fullUpdate/{key}")
+    public ResponseEntity<?> fullUpdate(@PathVariable("key") String key, @RequestBody VideoDTO dto) {
         log.info("Request for update {}", dto);
 //        Integer profileId = HttpHeaderUtil.getId(request, ProfileRole.MODERATOR);
-        VideoEntity channel = videoService.fullUpdate(id, dto, CurrentUser.getCurrentUser().getProfile().getId());
+        VideoEntity channel = videoService.fullUpdate(key, dto, CurrentUser.getCurrentUser().getProfile().getId());
         return ResponseEntity.ok().body("\tSuccessfully updated \n\n" + channel);
     }
 
 
     @ApiOperation(value = "Video update", notes = "Method for Video update")
-    @PutMapping("/OU/changeVideoStatus{id}")
-    public ResponseEntity<?> changeVideoStatus(@PathVariable String id, @Valid VideoDTO dto) {
+    @PutMapping("/ownUser/changeVideoStatus/{id}")
+    public ResponseEntity<?> changeVideoStatus(@PathVariable String id) {
         log.info("Request for update {}", id);
 //        Integer profileId = HttpHeaderUtil.getId(request, ProfileRole.MODERATOR);
-        VideoEntity channel = videoService.changeVideoStatus(id, dto);
+        VideoEntity channel = videoService.changeVideoStatus(id);
         return ResponseEntity.ok().body("\tSuccessfully updated \n\n" + channel);
     }
 
     @ApiOperation(value = "Increase video_view Count by key", notes = "Increase video_view Count by key")
-    @PutMapping("/IncreaseVideoViewCountByKey{id}")
+    @PutMapping("/public/IncreaseVideoViewCountByKey/{id}")
     public ResponseEntity<?> IncreaseVideoViewCountByKey(@PathVariable String id) {
         log.info("Request for Increase {}", id);
 //        Integer profileId = HttpHeaderUtil.getId(request, ProfileRole.MODERATOR);
@@ -84,7 +84,7 @@ public class VideoController {
 //    }
 
 
-    @GetMapping("/admin/pagination")
+    @GetMapping("/public/pagination")
     public ResponseEntity<?> getPagination(@RequestParam(value = "page", defaultValue = "0") int page,
                                            @RequestParam(value = "size", defaultValue = "2") int size) {
         log.info("Request for getPagination {}", page);

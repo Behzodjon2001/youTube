@@ -22,9 +22,9 @@ public class AttachController {
     private AttachService attachService;
 
     @PostMapping("/admUser/upload")
-    public ResponseEntity<AttachDTO> upload(@RequestParam("file") MultipartFile file, @RequestBody AttachDTO entity) {
+    public ResponseEntity<AttachDTO> upload(@RequestParam("file") MultipartFile file) {
         log.info("Request for upload {}" , file);
-        AttachDTO dto = attachService.saveToSystem(file, entity);
+        AttachDTO dto = attachService.saveToSystem(file);
         return ResponseEntity.ok().body(dto);
     }
 

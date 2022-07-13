@@ -1,55 +1,61 @@
 POST localhost:8080/video/user/create
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2MDQyNjgsImV4cCI6MTY1NzgyMDI2OCwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.qeaQiE0s_5_l_WEuF17BIDfR3jX1TH0FKnPbazdHOAM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2ODcxNDIsImV4cCI6MTY1NzkwMzE0MiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo4LCJyb2xlIjoiUk9MRV9VU0VSIn0.cU5c2eHiG28hvON3D7PFjccZI3-lShjDaquKxFm8aYI
 
 {
-  "name": "Programming",
-  "attach" : "4028dfd181d26c2a0181d26c7d4d0000",
-  "channel" : "402866d181f0e8fa0181f0eab1430000",
-  "description": "Programming language",
+  "name": "Konsert",
+  "attach": "4028dfd181d26c2a0181d26c7d4d0000",
+  "channel": "402866d181f0e8fa0181f0eab1430000",
+  "description": "Konsert xajviy",
   "review": "4028dfd181d26c2a0181d26c7d4d0000",
-  "key" : "program",
-  "title": "siteWeb",
+  "key": "konsertcha",
+  "title": "xajviy kulgu",
   "category": "MultFilm",
-  "type": "PUBLIC"
+  "type": "SHORT",
+  "status": "PUBLIC"
 }
 
 ###
 
 GET http://localhost:8080/video/user/list
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2MDQyNjgsImV4cCI6MTY1NzgyMDI2OCwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.qeaQiE0s_5_l_WEuF17BIDfR3jX1TH0FKnPbazdHOAM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2ODcxNDIsImV4cCI6MTY1NzkwMzE0MiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo4LCJyb2xlIjoiUk9MRV9VU0VSIn0.cU5c2eHiG28hvON3D7PFjccZI3-lShjDaquKxFm8aYI
 
 ###
 
 GET http://localhost:8080/video/public/byId/402866d181f0e8fa0181f0eab1430000
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2MDQyNjgsImV4cCI6MTY1NzgyMDI2OCwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.qeaQiE0s_5_l_WEuF17BIDfR3jX1TH0FKnPbazdHOAM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2ODcxNDIsImV4cCI6MTY1NzkwMzE0MiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo4LCJyb2xlIjoiUk9MRV9VU0VSIn0.cU5c2eHiG28hvON3D7PFjccZI3-lShjDaquKxFm8aYI
 
 
 ###
 
-PUT http://localhost:8080/video/ownUser/update/Musiqa
+PUT http://localhost:8080/video/ownUser/fullUpdate/konsertcha
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTcwODQ4OTIsImV4cCI6MTY1NzMwMDg5MiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.BcNzBwb9Sr2WYEoTwGz9PkBJlGskKeDPPbS5uAsFBsk
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2ODcxNDIsImV4cCI6MTY1NzkwMzE0MiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo4LCJyb2xlIjoiUk9MRV9VU0VSIn0.cU5c2eHiG28hvON3D7PFjccZI3-lShjDaquKxFm8aYI
 
 {
-  "name": "Mp3"
+  "name": "Tom and Jerry",
+  "attach" : "4028dfd181d26c2a0181d26c7d4d0000",
+  "channel" : "402866d181f0e8fa0181f0eab1430000",
+  "description": "Tom and Jerry about chesse",
+  "review": "4028dfd181d26c2a0181d26c7d4d0000",
+  "key" : "TomAndJerry",
+  "title": "catch the jeery",
+  "category": "MultFilm",
+  "type": "VIDEO"
 }
 
 ###
 
-PUT http://localhost:8080/video/adm/update/Musiqa
+PUT http://localhost:8080/video/ownUser/changeVideoStatus/TomAndJerry
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTcwODQ4OTIsImV4cCI6MTY1NzMwMDg5MiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.BcNzBwb9Sr2WYEoTwGz9PkBJlGskKeDPPbS5uAsFBsk
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2ODcxNDIsImV4cCI6MTY1NzkwMzE0MiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo4LCJyb2xlIjoiUk9MRV9VU0VSIn0.cU5c2eHiG28hvON3D7PFjccZI3-lShjDaquKxFm8aYI
 
-{
-  "name": "Mp3"
-}
 
 ###
 
-PUT http://localhost:8080/video/adm/update/Musiqa
+PUT http://localhost:8080/video/public/IncreaseVideoViewCountByKey/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTcwODQ4OTIsImV4cCI6MTY1NzMwMDg5MiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.BcNzBwb9Sr2WYEoTwGz9PkBJlGskKeDPPbS5uAsFBsk
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc2ODcxNDIsImV4cCI6MTY1NzkwMzE0MiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo4LCJyb2xlIjoiUk9MRV9VU0VSIn0.cU5c2eHiG28hvON3D7PFjccZI3-lShjDaquKxFm8aYI
 
 {
   "name": "Mp3"
@@ -62,4 +68,4 @@ Authorization: Bearer
 
 ###
 
-GET localhost:8080/video/admin/pagination?page=0&size=10
+GET localhost:8080/video/public/pagination?page=0&size=10

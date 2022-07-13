@@ -1,6 +1,7 @@
 package com.company.repository;
 
 import com.company.entity.ChannelEntity;
+import com.company.entity.ProfileEntity;
 import com.company.enums.ChannelStatus;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -13,5 +14,6 @@ public interface ChannelRepository extends PagingAndSortingRepository<ChannelEnt
 
     Optional<ChannelEntity> findByStatusAndVisible(ChannelStatus status, Boolean visible);
 
-    List<ChannelEntity> findByProfile(Integer pId);
+
+    List<ChannelEntity> findAllByProfile(ProfileEntity pId);
 }

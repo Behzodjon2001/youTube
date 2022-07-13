@@ -5,6 +5,7 @@ import com.company.entity.ChannelEntity;
 import com.company.entity.attach.AttachEntity;
 import com.company.enums.PlaylistStatus;
 import com.company.enums.VideoStatus;
+import com.company.enums.VideoType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -52,7 +53,7 @@ public class VideoEntity {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private VideoStatus type;
+    private VideoType type;
 
     @Column(name = "view_count")
     private Integer viewCount = 0;

@@ -41,7 +41,7 @@ public class AttachService {
     @Autowired
     private AttachTagService attachTagService;
 
-    public AttachDTO saveToSystem(MultipartFile file, AttachDTO tag) {
+    public AttachDTO saveToSystem(MultipartFile file) {
         try {
             // zari.jpg
             String pathFolder = getYmDString(); // 2022/06/20
@@ -60,7 +60,7 @@ public class AttachService {
             entity.setSize(file.getSize());
             entity.setPath(pathFolder);
 
-            attachTagService.create(entity, tag.getTagList());  // tag
+//            attachTagService.create(entity, tag.getTagList());  // tag
 
             attachRepository.save(entity);
 

@@ -1,6 +1,5 @@
 package com.company.entity;
 
-import com.company.enums.LikeStatus;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,7 +15,6 @@ public class ReportEntity {
 
     @Column(name = "created_date")
     private LocalDateTime createdDate = LocalDateTime.now();
-
 
     @JoinColumn(name = "profile_id")
     @ManyToOne(fetch = FetchType.LAZY)

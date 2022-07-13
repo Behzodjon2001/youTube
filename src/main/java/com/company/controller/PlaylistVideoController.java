@@ -18,7 +18,7 @@ public class PlaylistVideoController {
     @Autowired
     private PlaylistVideoService playlistVideoService;
 
-    @PostMapping("/adm/create")
+    @PostMapping("/userOwn/create")
     public ResponseEntity<?> create(@RequestBody PlaylistVideoDTO dto) {
         log.info("Request for create {}" , dto);
 //        HttpHeaderUtil.getId(request, ProfileRole.ADMIN);
@@ -26,7 +26,7 @@ public class PlaylistVideoController {
         return ResponseEntity.ok().body(categoryDTO);
     }
 
-    @GetMapping("/adm/list")
+    @GetMapping("/userOwn/list")
     public ResponseEntity<?> list() {
         log.info("Request for list {}");
 //        HttpHeaderUtil.getId(request, ProfileRole.ADMIN);
@@ -34,7 +34,7 @@ public class PlaylistVideoController {
         return ResponseEntity.ok().body(list);
     }
 
-//    @PutMapping("/adm/update/{id}")
+//    @PutMapping("/userOwn/update/{id}")
 //    public ResponseEntity<?> update(@RequestParam(value = "page", defaultValue = "0") int page,
 //                                    @RequestParam(value = "size", defaultValue = "2") int size) {
 //        log.info("Request for update {}" , dto, id);
@@ -43,7 +43,7 @@ public class PlaylistVideoController {
 //        return ResponseEntity.ok().body("Successfully updated");
 //    }
 
-    @DeleteMapping("/adm/delete/{id}")
+    @DeleteMapping("/userOwn/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         log.info("Request for delete {}" , id);
 //        HttpHeaderUtil.getId(request, ProfileRole.ADMIN);

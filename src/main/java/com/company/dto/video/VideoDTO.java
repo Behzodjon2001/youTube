@@ -1,6 +1,7 @@
 package com.company.dto.video;
 
 import com.company.enums.VideoStatus;
+import com.company.enums.VideoType;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -25,7 +26,7 @@ public class VideoDTO {
 
     private VideoStatus status;
 
-    private VideoStatus type;
+    private VideoType type;
 
     private Integer viewCount = 0;
 

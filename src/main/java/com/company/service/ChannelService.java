@@ -25,6 +25,8 @@ public class ChannelService {
     private AttachService attachService;
     @Autowired
     private ChannelRepository channelRepository;
+    @Autowired
+    private ProfileService profileService;
 
     public ChannelDTO create(ChannelDTO dto, Integer profileId) {
         ChannelEntity entity = new ChannelEntity();
@@ -38,9 +40,9 @@ public class ChannelService {
         AttachEntity banner = attachService.get(dto.getAttach());
         entity.setAttach(banner);
 
-        ProfileEntity user = new ProfileEntity();
-        user.setId(profileId);
-        entity.setProfile(user);
+        ProfileEntity profile = profileService.get(profileId);
+        entity.setProfile(profile);
+
         entity.setStatus(ChannelStatus.ACTIVE);
 
         entity.setWebsiteUrl(dto.getWebsiteUrl());
@@ -74,7 +76,7 @@ public class ChannelService {
             throw new BadRequestException("You don't have this article");
         }
         ChannelStatus status = entity.getStatus();
-        if (status.equals(ChannelStatus.ACTIVE)) {
+        if (status.equals(ChannelStatus.BLOCK)) {
             log.info("Sorry this article already block. You can not edit {}" , status);
             throw new BadRequestException("Sorry this article already block. You can not edit");
         }
@@ -95,13 +97,9 @@ public class ChannelService {
             throw new ItemNotFoundException("This channel not found!");
         }
         ChannelEntity entity = optional.get();
-        Integer pId = entity.getProfile().getId();
-        if (!Objects.equals(pId, profileId)) {
-            log.error("you don't have this article {}" , profileId);
-            throw new BadRequestException("You don't have this article");
-        }
+
         ChannelStatus status = entity.getStatus();
-        if (status.equals(ChannelStatus.ACTIVE)) {
+        if (status.equals(ChannelStatus.BLOCK)) {
             log.info("Sorry this article already block. You can not edit {}" , status);
             throw new BadRequestException("Sorry this article already block. You can not edit");
         }
@@ -125,12 +123,13 @@ public class ChannelService {
             throw new BadRequestException("You don't have this article");
         }
         ChannelStatus status = entity.getStatus();
-        if (status.equals(ChannelStatus.ACTIVE)) {
+        if (status.equals(ChannelStatus.BLOCK)) {
             log.info("Sorry this article already block. You can not edit {}" , status);
             throw new BadRequestException("Sorry this article already block. You can not edit");
         }
 
-        entity.setBanner(dto.getBanner());
+        AttachEntity attach = attachService.get(dto.getBanner());
+        entity.setBanner(attach);
         return channelRepository.save(entity);
     }
 
@@ -158,16 +157,27 @@ public class ChannelService {
             log.error("published channel not found {}" , cId);
             throw new ItemNotFoundException("Not found!");
         }
-        Optional<ChannelEntity> entityList = channelRepository.findByStatusAndVisible(ChannelStatus.ACTIVE, true);
-        if (entityList.isEmpty()) {
-            log.error("published channel not found {}" , cId);
-            throw new ItemNotFoundException("Not found!");
-        }
-        return entityToDtoListOptional(entityList);
+
+        ChannelEntity channel = optional.get();
+
+        ChannelDTO dto = new ChannelDTO();
+        dto.setName(channel.getName());
+        dto.setDescription(channel.getDescription());
+        dto.setAttach(channel.getAttach().getId());
+        dto.setWebsiteUrl(channel.getWebsiteUrl());
+        dto.setTelefoneUrl(channel.getTelefoneUrl());
+        dto.setInstagramUrl(channel.getInstagramUrl());
+        dto.setStatus(channel.getStatus());
+        dto.setCreatedDate(channel.getCreatedDate());
+        dto.setVisible(channel.getVisible());
+        dto.setProfile(channel.getProfile().getId());
+        dto.setKey(channel.getKey());
+
+        return dto;
     }
 
-    public List<ChannelDTO> list(Integer pId) {
-        List<ChannelEntity> optional = channelRepository.findByProfile(pId);
+    public List<ChannelDTO> list(ProfileEntity pId) {
+        List<ChannelEntity> optional = channelRepository.findAllByProfile(pId);
 
         return entityToDtoList(optional);
     }
@@ -263,36 +273,16 @@ public class ChannelService {
             dto.setName(entity.getName());
             dto.setDescription(entity.getDescription());
             dto.setAttach(entity.getAttach().getId());
-            dto.setBanner(entity.getBanner());
             dto.setWebsiteUrl(entity.getWebsiteUrl());
             dto.setTelefoneUrl(entity.getTelefoneUrl());
             dto.setInstagramUrl(entity.getInstagramUrl());
             dto.setStatus(entity.getStatus());
             dto.setCreatedDate(entity.getCreatedDate());
             dto.setVisible(entity.getVisible());
-            dto.setProfile(entity.getProfile());
+            dto.setProfile(entity.getProfile().getId());
             dto.setKey(entity.getKey());
             list.add(dto);
         }
         return list;
-    }
-
-    private ChannelDTO entityToDtoListOptional(Optional<ChannelEntity> entityList) {
-        ChannelEntity channel = entityList.get();
-
-            ChannelDTO dto = new ChannelDTO();
-            dto.setName(channel.getName());
-            dto.setDescription(channel.getDescription());
-            dto.setAttach(channel.getAttach().getId());
-            dto.setWebsiteUrl(channel.getWebsiteUrl());
-            dto.setTelefoneUrl(channel.getTelefoneUrl());
-            dto.setInstagramUrl(channel.getInstagramUrl());
-            dto.setStatus(channel.getStatus());
-            dto.setCreatedDate(channel.getCreatedDate());
-            dto.setVisible(channel.getVisible());
-            dto.setProfile(channel.getProfile());
-            dto.setKey(channel.getKey());
-
-        return dto;
     }
 }

@@ -8,6 +8,7 @@ import com.company.entity.attach.AttachEntity;
 import com.company.enums.PlaylistStatus;
 import com.company.exception.BadRequestException;
 import com.company.exception.ItemNotFoundException;
+import com.company.repository.ChannelRepository;
 import com.company.repository.PlaylistRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class PlaylistService {
     private ChannelService channelService;
     @Autowired
     private PlaylistRepository playlistRepository;
+    @Autowired
+    private ChannelRepository channelRepository;
 
     public PlaylistDTO create(PlaylistDTO dto, Integer profileId) {
         PlaylistEntity entity = new PlaylistEntity();
@@ -40,6 +43,7 @@ public class PlaylistService {
 
         ChannelEntity channel = channelService.get(dto.getChannel());
         entity.setChannel(channel);
+        entity.setOrderNum(dto.getOrderNum());
 
         entity.setStatus(dto.getStatus());
         entity.setCreatedDate(LocalDateTime.now());
@@ -76,6 +80,7 @@ public class PlaylistService {
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
         entity.setStatus(dto.getStatus());
+        entity.setOrderNum(dto.getOrderNum());
         entity.setUpdatedDate(LocalDateTime.now());
         return playlistRepository.save(entity);
     }
@@ -99,20 +104,41 @@ public class PlaylistService {
     }
 
 
-//    public Optional<PlaylistDTO> listById(String cId) {
+//    public PlaylistDTO listById(Integer cId) {
 //        Optional<PlaylistEntity> optional = playlistRepository.findById(cId);
 //        if (optional.isEmpty()){
 //            log.error("published channel not found {}" , cId);
 //            throw new ItemNotFoundException("Not found!");
 //        }
-//        Optional<PlaylistEntity> entityList = playlistRepository.findByStatusAndVisible(PlaylistStatus.ACTIVE, true);
+//        Optional<PlaylistEntity> entityList = playlistRepository.findByVisible(true);
 //        if (entityList.isEmpty()) {
 //            log.error("published channel not found {}" , cId);
 //            throw new ItemNotFoundException("Not found!");
 //        }
-//        return Optional.of(entityToDtoListOptional(entityList));
+//        return entityToDtoListShort(entityList);
 //    }
+
+//    public PlaylistDTO listCurrentUser(Integer cId) {
+//        List<ChannelEntity> optionalProf = channelRepository.findByProfile(cId);
+//        if (optionalProf.isEmpty()){
+//            log.error("published channel not found {}" , cId);
+//            throw new ItemNotFoundException("Not found!");
+//        }
 //
+//
+//        Optional<PlaylistEntity> optional = playlistRepository.findById(optionalProf.get(cId).getProfile().getId());
+//        if (optional.isEmpty()){
+//            log.error("published channel not found {}" , cId);
+//            throw new ItemNotFoundException("Not found!");
+//        }
+//        Optional<PlaylistEntity> entityList = playlistRepository.findByVisible(true);
+//        if (entityList.isEmpty()) {
+//            log.error("published channel not found {}" , cId);
+//            throw new ItemNotFoundException("Not found!");
+//        }
+//        return entityToDtoListShort(entityList);
+//    }
+
 //    public List<PlaylistDTO> list(Integer pId) {
 //        List<PlaylistEntity> optional = playlistRepository.findBychannel(pId);
 //
@@ -180,6 +206,20 @@ public class PlaylistService {
         dto.setUpdatedDate(channel.getUpdatedDate());
         dto.setStatus(channel.getStatus());
         dto.setVisible(channel.getVisible());
+
+        return dto;
+    }
+
+    private PlaylistDTO entityToDtoListShort(Optional<PlaylistEntity> entityList) {
+        PlaylistEntity channel = entityList.get();
+
+        PlaylistDTO dto = new PlaylistDTO();
+        dto.setName(channel.getName());
+        dto.setDescription(channel.getDescription());
+        dto.setReview(channel.getReview().getId());
+        dto.setCreatedDate(channel.getCreatedDate());
+        dto.setUpdatedDate(channel.getUpdatedDate());
+        dto.setStatus(channel.getStatus());
 
         return dto;
     }

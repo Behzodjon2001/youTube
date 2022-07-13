@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface VideoTagRepository extends CrudRepository<VideoTagEntity, Integer> {
 
+    Iterable<VideoTagEntity> findByVideo(String videoId);
 }
