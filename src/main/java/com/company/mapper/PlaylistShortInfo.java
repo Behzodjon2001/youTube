@@ -3,7 +3,7 @@ package com.company.mapper;
 import java.time.LocalDateTime;
 
 public interface PlaylistShortInfo {
-    String getPlaylistId();
+    Integer getPlaylistId();
     String getPlaylistName();
     LocalDateTime getPlaylistCreatedDate();
     String getChannelId();

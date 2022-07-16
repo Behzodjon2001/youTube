@@ -2,6 +2,7 @@ package com.company.entity;
 
 import com.company.entity.video.VideoEntity;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,8 +12,9 @@ import java.time.LocalDateTime;
 @Table(name = "playlist_video")
 public class PlaylistVideoEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String id;
 
     @Column(name = "playlist_id")
     private String playlistId;
@@ -29,4 +31,7 @@ public class PlaylistVideoEntity {
 
     @Column
     private Integer orderNum;
+
+    @Column
+    private Boolean visible=true;
 }

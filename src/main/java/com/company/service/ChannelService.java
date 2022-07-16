@@ -141,10 +141,14 @@ public class ChannelService {
         }
 
         ChannelEntity channel = optional.get();
-        if (channel.getStatus().equals(ChannelStatus.ACTIVE)) {
-            channel.setStatus(ChannelStatus.BLOCK);
+        if (channel.getProfileId().equals(profileId)) {
+            if (channel.getStatus().equals(ChannelStatus.ACTIVE)) {
+                channel.setStatus(ChannelStatus.BLOCK);
+            } else {
+                channel.setStatus(ChannelStatus.ACTIVE);
+            }
         } else {
-            channel.setStatus(ChannelStatus.ACTIVE);
+            throw new BadRequestException("Bu kanal sizniki emas!!!");
         }
 
         return channelRepository.save(channel);

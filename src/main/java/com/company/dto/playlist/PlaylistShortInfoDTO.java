@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 public class PlaylistShortInfoDTO {
     private List<PlaylistVideoLimit2> videoShortInfoDTOS;
-    private String playlistId;
+    private Integer playlistId;
     private String playlistName;
     private LocalDateTime playlistCreatedDate;
     private String channelId;

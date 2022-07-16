@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class PlaylistVideoDTO {
-    private Integer id;
+    private String id;
 
     private Integer playlist;
 

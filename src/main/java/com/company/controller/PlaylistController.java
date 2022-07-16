@@ -52,21 +52,21 @@ public class PlaylistController {
         return ResponseEntity.ok().body("\tSuccessfully updated \n\n" + channel);
     }
 
-//    @ApiOperation(value = "list By Playlist", notes="Method for list By Playlist")
-//    @GetMapping("/public/byId/{id}")
-//    public ResponseEntity<?> listById(@PathVariable("id") Integer id) {
-//        log.info("Request for listByCategory {}" , id);
-//        PlaylistDTO list = playlistService.listById(id);
-//        return ResponseEntity.ok().body(list);
-//    }
-//
-//    @ApiOperation(value = "list By Playlist", notes="Method for list By Playlist")
-//    @GetMapping("/public/byId/{id}")
-//    public ResponseEntity<?> listCurrentUser() {
-//        log.info("Request for listByCategory {}");
-//        PlaylistDTO list = playlistService.listCurrentUser(CurrentUser.getCurrentUser().getProfile().getId());
-//        return ResponseEntity.ok().body(list);
-//    }
+    @ApiOperation(value = "list By Playlist", notes="Method for list By Playlist")
+    @GetMapping("/admin/byId/{profileId}")
+    public ResponseEntity<?> listById(@PathVariable("profileId") Integer profileId) {
+        log.info("Request for listByCategory {}" , profileId);
+        List<PlaylistDTO> list = playlistService.listById(profileId);
+        return ResponseEntity.ok().body(list);
+    }
+
+    @ApiOperation(value = "list By Playlist", notes="Method for list By Playlist")
+    @GetMapping("/user/byId")
+    public ResponseEntity<?> listCurrentUser() {
+        log.info("Request for listByCategory {}");
+        List<PlaylistDTO> list = playlistService.listCurrentUser(CurrentUser.getCurrentUser().getProfile().getId());
+        return ResponseEntity.ok().body(list);
+    }
 //
 //    @ApiOperation(value = "list By Type", notes="Method for list By Type")
 //    @GetMapping("/user/list")

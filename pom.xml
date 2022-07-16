@@ -78,6 +78,12 @@
             <artifactId>fast-md5</artifactId>
             <version>2.7.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.mp4parser</groupId>
+            <artifactId>isoparser</artifactId>
+            <version>1.9.41</version>
+        </dependency>
     </dependencies>
 
     <build>

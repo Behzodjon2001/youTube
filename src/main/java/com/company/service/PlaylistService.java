@@ -120,40 +120,24 @@ public class PlaylistService {
     }
 
 
-//    public PlaylistDTO listById(Integer cId) {
-//        Optional<PlaylistEntity> optional = playlistRepository.findById(cId);
-//        if (optional.isEmpty()){
-//            log.error("published channel not found {}" , cId);
-//            throw new ItemNotFoundException("Not found!");
-//        }
-//        Optional<PlaylistEntity> entityList = playlistRepository.findByVisible(true);
-//        if (entityList.isEmpty()) {
-//            log.error("published channel not found {}" , cId);
-//            throw new ItemNotFoundException("Not found!");
-//        }
-//        return entityToDtoListShort(entityList);
-//    }
+    public List<PlaylistDTO> listById(Integer cId) {
+        List<PlaylistEntity> optional = playlistRepository.findByProfileId(cId);
+        if (optional.isEmpty()){
+            log.error("published channel not found {}" , cId);
+            throw new ItemNotFoundException("Not found!");
+        }
+        return entityToDtoList(optional);
+    }
 
-//    public PlaylistDTO listCurrentUser(Integer cId) {
-//        List<ChannelEntity> optionalProf = channelRepository.findByProfile(cId);
-//        if (optionalProf.isEmpty()){
-//            log.error("published channel not found {}" , cId);
-//            throw new ItemNotFoundException("Not found!");
-//        }
-//
-//
-//        Optional<PlaylistEntity> optional = playlistRepository.findById(optionalProf.get(cId).getProfile().getId());
-//        if (optional.isEmpty()){
-//            log.error("published channel not found {}" , cId);
-//            throw new ItemNotFoundException("Not found!");
-//        }
-//        Optional<PlaylistEntity> entityList = playlistRepository.findByVisible(true);
-//        if (entityList.isEmpty()) {
-//            log.error("published channel not found {}" , cId);
-//            throw new ItemNotFoundException("Not found!");
-//        }
-//        return entityToDtoListShort(entityList);
-//    }
+    public List<PlaylistDTO> listCurrentUser(Integer pId) {
+        List<PlaylistEntity> optionalProf = playlistRepository.findByProfileId(pId);
+        if (optionalProf.isEmpty()) {
+            log.error("published channel not found {}", pId);
+            throw new ItemNotFoundException("Not found!");
+        }
+
+        return entityToDtoList(optionalProf);
+    }
 
 //    public List<PlaylistDTO> list(Integer pId) {
 //        List<PlaylistEntity> optional = playlistRepository.findBychannel(pId);
@@ -242,6 +226,10 @@ public class PlaylistService {
 
         return new PageImpl<>(dtoList, pageable, all.getTotalElements());
     }
+//
+//    public PlaylistDTO listById(Integer id) {
+//        List<PlaylistEntity> playlistById = playlistRepository.findByProfileId(id);
+//    }
 
     private List<PlaylistDTO> entityToDtoList(List<PlaylistEntity> entityList) {
         List<PlaylistDTO> list = new LinkedList<>();
@@ -255,6 +243,7 @@ public class PlaylistService {
             dto.setUpdatedDate(entity.getUpdatedDate());
             dto.setStatus(entity.getStatus());
             dto.setVisible(entity.getVisible());
+            dto.setOrderNum(entity.getOrderNum());
             list.add(dto);
         }
         return list;
