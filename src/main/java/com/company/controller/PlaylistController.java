@@ -1,6 +1,7 @@
 package com.company.controller;
 
 import com.company.dto.PlaylistDTO;
+import com.company.dto.playlist.PlaylistShortInfoDTO;
 import com.company.entity.PlaylistEntity;
 import com.company.service.PlaylistService;
 import com.company.util.CurrentUser;
@@ -91,5 +92,21 @@ public class PlaylistController {
         log.info("Request for getPagination {}" , page);
         PageImpl<PlaylistDTO> response = playlistService.pagination(page, size);
         return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/public/channel/{channelId}")
+    public ResponseEntity<?> playlistByChannelId(@PathVariable("channelId") String channelId){
+
+        List<PlaylistShortInfoDTO> list = playlistService.getPlaylistByChannel(channelId);
+
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/public/playlist/{playlistId}")
+    public ResponseEntity<?> playlistByPlaylistId(@PathVariable("playlistId") String playlistId){
+
+        playlistService.getPlaylistVideosByPlaylistId(playlistId);
+
+        return ResponseEntity.ok("success");
     }
 }

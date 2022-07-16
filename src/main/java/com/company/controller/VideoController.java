@@ -1,6 +1,8 @@
 package com.company.controller;
 
+import com.company.dto.VideoShortInfoDTO;
 import com.company.dto.video.VideoDTO;
+import com.company.dto.video.VideoFullInfoDTO;
 import com.company.entity.video.VideoEntity;
 import com.company.service.VideoService;
 import com.company.util.CurrentUser;
@@ -13,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Api(tags = "Video")
 @Slf4j
@@ -85,10 +88,60 @@ public class VideoController {
 
 
     @GetMapping("/public/pagination")
-    public ResponseEntity<?> getPagination(@RequestParam(value = "page", defaultValue = "0") int page,
-                                           @RequestParam(value = "size", defaultValue = "2") int size) {
-        log.info("Request for getPagination {}", page);
-        PageImpl<VideoDTO> response = videoService.pagination(page, size);
-        return ResponseEntity.ok().body(response);
+    public ResponseEntity<?> pagination(@RequestParam("categoryId") Integer categoryId,
+                                        @RequestParam("size") Integer size,
+                                        @RequestParam("page") Integer page) {
+
+        List<VideoShortInfoDTO> dtos = videoService.searchByCategory(categoryId, size, page);
+        return ResponseEntity.ok(dtos);
+
+    }
+
+    @GetMapping("/public/search_title")
+    public ResponseEntity<?> pagination(@RequestParam("search_text") String text,
+                                        @RequestParam("size") Integer size,
+                                        @RequestParam("page") Integer page) {
+
+        List<VideoShortInfoDTO> dtos = videoService.searchByName(text, size, page);
+        return ResponseEntity.ok(dtos);
+
+    }
+
+    @GetMapping("/public/search_tag")
+    public ResponseEntity<?> paginationByTag(@RequestParam("tagId") Integer tagId,
+                                             @RequestParam("size") Integer size,
+                                             @RequestParam("page") Integer page) {
+
+        List<VideoShortInfoDTO> dtos = videoService.searchByTag(tagId, size, page);
+        return ResponseEntity.ok(dtos);
+
+    }
+
+
+    @GetMapping("/adnOwn/{id}")
+    public ResponseEntity<?> getById(@PathVariable("id") String videoId) {
+
+        VideoFullInfoDTO dto = videoService.getById(videoId);
+        return ResponseEntity.ok(dto);
+
+    }
+
+    @GetMapping("/adm/pagination")
+    public ResponseEntity<?> pagination(@RequestParam("size") Integer size,
+                                        @RequestParam("page") Integer page) {
+
+        List<VideoShortInfoDTO> dtos = videoService.pagination(size, page);
+        return ResponseEntity.ok(dtos);
+
+    }
+
+    @GetMapping("/public/search_channel")
+    public ResponseEntity<?> paginationByChannel(@RequestParam("channleId") String channelId,
+                                                 @RequestParam("size") Integer size,
+                                                 @RequestParam("page") Integer page) {
+
+        List<VideoShortInfoDTO> dtos = videoService.searchByChannel(channelId, size, page);
+        return ResponseEntity.ok(dtos);
+
     }
 }

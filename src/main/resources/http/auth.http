@@ -9,6 +9,19 @@ Content-Type: application/json
   "phone": "998970070777",
   "password": "1245"
 }
+###
+
+POST http://localhost:8080/auth/registration
+Content-Type: application/json
+#Authorization: Bearer
+
+{
+  "name": "Sawash",
+  "surname": "Sawashov",
+  "email": "malikovbehzod2001@gmail.com",
+  "phone": "998914640908",
+  "password": "1245"
+}
 
 
 ###

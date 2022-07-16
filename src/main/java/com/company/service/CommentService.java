@@ -92,7 +92,7 @@ public class CommentService {
             ProfileEntity profile = profileService.get(ent.getProfile().getId());
             dto1.setProfile(profile.getId());
 
-            dto1.setVideo(ent.getVideo().getId());
+            dto1.setVideo(ent.getVideo().getUuid());
 
             list.add(dto1);
         }
@@ -153,7 +153,7 @@ public class CommentService {
             dto.setProfile(ent.getProfile().getId());
 
 //            VideoEntity video = videoService.get(ent.getVideo().getId());
-            dto.setVideo(ent.getVideo().getId());
+            dto.setVideo(ent.getVideo().getUuid());
 
             dto.setUpdateDate(ent.getUpdateDate());
 //            dto.setReply(ent.getReply().getId());

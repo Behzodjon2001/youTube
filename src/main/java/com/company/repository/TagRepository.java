@@ -8,6 +8,4 @@ import java.util.Optional;
 public interface TagRepository extends CrudRepository<TagEntity, Integer> {
 
     Optional<TagEntity> findByName(String name);
-
-    boolean existsByName(String name);
 }

@@ -221,4 +221,8 @@ public class AttachService {
         }
         return list;
     }
+
+    public String getAttachOpenUrl(String uuid){
+        return   serverUrl + "attach/open?fileId=" + uuid;
+    }
 }

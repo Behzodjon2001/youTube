@@ -1,6 +1,9 @@
 package com.company.service;
 
 import com.company.dto.PlaylistDTO;
+import com.company.dto.VideoShortInfoDTO;
+import com.company.dto.playlist.PlaylistFullDTO;
+import com.company.dto.playlist.PlaylistShortInfoDTO;
 import com.company.entity.ChannelEntity;
 import com.company.entity.PlaylistEntity;
 import com.company.entity.ProfileEntity;
@@ -8,6 +11,9 @@ import com.company.entity.attach.AttachEntity;
 import com.company.enums.PlaylistStatus;
 import com.company.exception.BadRequestException;
 import com.company.exception.ItemNotFoundException;
+import com.company.mapper.PlaylistFullInfo;
+import com.company.mapper.PlaylistShortInfo;
+import com.company.mapper.PlaylistVideoLimit2;
 import com.company.repository.ChannelRepository;
 import com.company.repository.PlaylistRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -15,11 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.nio.channels.Channel;
 import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -30,8 +34,6 @@ public class PlaylistService {
     private ChannelService channelService;
     @Autowired
     private PlaylistRepository playlistRepository;
-    @Autowired
-    private ChannelRepository channelRepository;
 
     public PlaylistDTO create(PlaylistDTO dto, Integer profileId) {
         PlaylistEntity entity = new PlaylistEntity();
@@ -84,6 +86,20 @@ public class PlaylistService {
         entity.setUpdatedDate(LocalDateTime.now());
         return playlistRepository.save(entity);
     }
+
+//    public List<PlaylistDTO> getProfilePlayList() {
+//        ProfileEntity entity = profileService.getProfile();
+//        List<PlaylistDTO> playlistService = new LinkedList<>();
+//
+//        List<PlaylistShortInfo> shortInfolist = playlistRepository.getPlayLists(entity.getId());
+//        for (PlaylistShortInfo info: shortInfolist){
+//            PlaylistDTO dto = new PlaylistDTO();
+//            dto.setId(info.getPlaylistId());
+//            dto.setName(info.getPlaylistName());
+//            dto.setCreatedDate(info.getPlaylistCreationDate());
+//            dto.setChannel(new Channel(info.getPlaylist));
+//        }
+//    }
 
 
     public PlaylistEntity changStatus(Integer id) {
@@ -162,6 +178,56 @@ public class PlaylistService {
             log.error("article  not found {}" , id);
             throw new ItemNotFoundException("Article not found");
         });
+    }
+
+    public List<PlaylistShortInfoDTO> getPlaylistByChannel(String channelId) {
+
+        List<PlaylistShortInfoDTO> playlistShortInfoDTOS = new ArrayList<>();
+
+        playlistRepository.getPlayListByChannelId(channelId).forEach(playlistShortInfo -> {
+
+            List<PlaylistVideoLimit2> infoLimit2 = playlistRepository
+                    .playlistShortInfoLimit2(playlistShortInfo.getPlaylistId());
+
+            PlaylistShortInfoDTO dto = new PlaylistShortInfoDTO();
+            dto.setVideoShortInfoDTOS(infoLimit2);
+            dto.setPlaylistId(playlistShortInfo.getPlaylistId());
+            dto.setChannelId(playlistShortInfo.getChannelId());
+            dto.setChannelName(playlistShortInfo.getChannelName());
+            dto.setPlaylistName(playlistShortInfo.getPlaylistName());
+            dto.setPlaylistCreatedDate(playlistShortInfo.getPlaylistCreatedDate());
+            dto.setCountVideo(playlistShortInfo.getCountVideo());
+//            dto.setAttachUrl(attachService.getAttachOpenUrl());
+
+            playlistShortInfoDTOS.add(dto);
+        });
+
+        return playlistShortInfoDTOS;
+    }
+
+    public PlaylistFullDTO getPlaylistVideosByPlaylistId(String playlistId) {
+
+        List<PlaylistFullInfo> list = playlistRepository.playlistFullInfoList(playlistId);
+
+        PlaylistFullDTO dto = new PlaylistFullDTO();
+        dto.setPlaylistId(list.get(0).getPlaylistId());
+        dto.setPlaylistName(list.get(0).getPlaylistName());
+
+        int playlistViewCount = 0;
+
+        List<VideoShortInfoDTO> dtos = new ArrayList<>();
+
+        for (PlaylistFullInfo playlistFullInfo : list) {
+            dtos.add(new VideoShortInfoDTO(playlistFullInfo.getVideoId(), playlistFullInfo.getVideoName(),
+                    attachService.getAttachOpenUrl(playlistFullInfo.getReviewId()), playlistFullInfo.getViewCount()));
+
+            playlistViewCount += playlistFullInfo.getViewCount();
+        }
+
+        dto.setPlaylistViewCount(playlistViewCount);
+        dto.setVideoShortInfoDTOS(dtos);
+
+        return dto;
     }
 
 

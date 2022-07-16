@@ -20,8 +20,10 @@ public class ChannelEntity {
     @Column(nullable = false)
     private String name;
 
+    @Column(name = "photo_id")
+    private String attachId;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "attach_id")
+    @JoinColumn(name = "photo_id", updatable = false, insertable = false)
     private AttachEntity attach;
 
     @Column()
@@ -35,8 +37,10 @@ public class ChannelEntity {
     @JoinColumn(name = "banner_id")
     private AttachEntity banner;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "profile_id")
+    @Column(name = "profile_id", nullable = false)
+    private Integer profileId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_id", nullable = false, insertable = false, updatable = false)
     private ProfileEntity profile;
 
     @Column(nullable = false)

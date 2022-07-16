@@ -1,5 +1,6 @@
 package com.company.service;
 
+import com.company.config.CustomUserDetails;
 import com.company.dto.profile.ProfileDTO;
 import com.company.dto.profile.ProfileFilterDTO;
 import com.company.entity.ProfileEntity;
@@ -11,6 +12,7 @@ import com.company.exception.ItemNotFoundException;
 import com.company.repository.AttachRepository;
 import com.company.repository.ProfileRepository;
 import com.company.repository.custome.CustomProfileRepository;
+import com.company.util.CurrentUser;
 import com.company.util.JwtUtil;
 import com.company.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
@@ -119,6 +121,12 @@ public class ProfileService {
             log.error("Profile Not Found {}", id);
             throw new ItemNotFoundException("Profile not found");
         });
+    }
+
+    public ProfileEntity getProfile() {
+
+        CustomUserDetails user = CurrentUser.getCurrentUser();
+        return user.getProfile();
     }
 
     public List<ProfileDTO> list(String role) {

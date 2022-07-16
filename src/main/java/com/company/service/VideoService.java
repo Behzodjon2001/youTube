@@ -1,28 +1,36 @@
 package com.company.service;
 
 import com.company.dto.PlaylistDTO;
+import com.company.dto.VideoShortInfoDTO;
+import com.company.dto.tag.TagDTO;
 import com.company.dto.video.VideoDTO;
+import com.company.dto.video.VideoFullInfoDTO;
 import com.company.entity.CategoryEntity;
 import com.company.entity.ChannelEntity;
 import com.company.entity.PlaylistEntity;
 import com.company.entity.video.VideoEntity;
 import com.company.entity.ProfileEntity;
 import com.company.entity.attach.AttachEntity;
+import com.company.entity.video.VideoTagEntity;
+import com.company.enums.LikeStatus;
 import com.company.enums.PlaylistStatus;
+import com.company.enums.ProfileRole;
 import com.company.enums.VideoStatus;
 import com.company.exception.BadRequestException;
 import com.company.exception.ItemNotFoundException;
+import com.company.exception.NotPermissionException;
+import com.company.mapper.VideoShortInfo;
+import com.company.mapper.VideoViewLikeDislikeCountAndStatusByProfile;
 import com.company.repository.VideoRepository;
+import com.company.repository.VideoTagRepository;
+import com.company.repository.VideoWatchedRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -35,11 +43,16 @@ public class VideoService {
     private CategoryService categoryService;
     @Autowired
     private VideoRepository videoRepository;
+    @Autowired
+    private ProfileService profileService;
+    @Autowired
+    private VideoTagRepository videoTagRepository;
+    @Autowired
+    private VideoWatchedRepository videoWatchedRepository;
 
     public VideoDTO create(VideoDTO dto, Integer profileId) {
         VideoEntity entity = new VideoEntity();
         entity.setTitle(dto.getTitle());
-        entity.setKey(dto.getKey());
         entity.setDescription(dto.getDescription());
         entity.setCreatedDate(LocalDateTime.now());
         entity.setPublishedDate(null);
@@ -63,7 +76,6 @@ public class VideoService {
 
         VideoDTO articleDTO = new VideoDTO();
         articleDTO.setTitle(entity.getTitle());
-        articleDTO.setKey(entity.getKey());
         articleDTO.setDescription(entity.getDescription());
         //  articleDTO.setRegionEntity(entity.getRegion());
         articleDTO.setStatus(entity.getStatus());
@@ -82,7 +94,6 @@ public class VideoService {
         VideoEntity entity = optional.get();
 
         entity.setTitle(dto.getTitle());
-        entity.setKey(dto.getKey());
         entity.setDescription(dto.getDescription());
         entity.setPublishedDate(LocalDateTime.now());
         entity.setType(dto.getType());
@@ -280,5 +291,119 @@ public class VideoService {
     public boolean isExistArticle(String id) {
             return videoRepository.existsById(id);
 
+    }
+
+    public List<VideoShortInfoDTO> searchByCategory(Integer categoryId, Integer size, Integer page) {
+
+        List<VideoShortInfo> search = videoRepository.searchByCategory(categoryId, size, page * size);
+
+        List<VideoShortInfoDTO> dtos = new ArrayList<>();
+        search.forEach(info -> {
+            dtos.add(new VideoShortInfoDTO(info.getVideoId(),info.getVideoName(),
+                    attachService.getAttachOpenUrl(info.getVideoReviewId()), info.getViewCount()));
+        });
+
+        return dtos;
+    }
+
+    public List<VideoShortInfoDTO> searchByName(String text, Integer size, Integer page) {
+
+
+        List<VideoShortInfo> search = videoRepository.searchByName("%"+text+"%", size, page * size);
+
+        List<VideoShortInfoDTO> dtos = new ArrayList<>();
+        search.forEach(info -> {
+            dtos.add(new VideoShortInfoDTO(info.getVideoId(),info.getVideoName(),
+                    attachService.getAttachOpenUrl(info.getVideoReviewId()), info.getViewCount()));
+        });
+
+        return dtos;
+    }
+
+    public List<VideoShortInfoDTO> searchByTag(Integer tagId, Integer size, Integer page) {
+
+        List<VideoShortInfo> search = videoRepository.searchByTag(tagId, size, page * size);
+
+        List<VideoShortInfoDTO> dtos = new ArrayList<>();
+        search.forEach(info -> {
+            dtos.add(new VideoShortInfoDTO(info.getVideoId(),info.getVideoName(),
+                    attachService.getAttachOpenUrl(info.getVideoReviewId()), info.getViewCount()));
+        });
+
+        return dtos;
+
+    }
+
+    public VideoFullInfoDTO getById(String videoId) {
+
+        ProfileEntity profile = profileService.getProfile();
+
+        VideoEntity entity = get(videoId);
+
+        if (!entity.getChannel().getProfileId().equals(profile.getId()) &&
+                !profile.getRole().equals(ProfileRole.ROLE_ADMIN)) {
+            throw new NotPermissionException("no access");
+        }
+
+        VideoFullInfoDTO dto = new VideoFullInfoDTO();
+        dto.setAttachUrl(attachService.getAttachOpenUrl(entity.getAttachId()));
+        dto.setUuid(entity.getUuid());
+        dto.setName(entity.getName());
+        dto.setDescription(entity.getDescription());
+        dto.setReviewId(entity.getReviewId());
+        dto.setReviewUrl(attachService.getAttachOpenUrl(entity.getReviewId()));
+        dto.setAttachId(entity.getAttachId());
+        dto.setCategoryId(entity.getCategoryId());
+        dto.setCategoryName(entity.getCategory().getName());
+        dto.setCreatedDate(entity.getCreatedDate());
+        dto.setChannelId(entity.getChannelId());
+        dto.setChannelName(entity.getChannel().getName());
+        dto.setChannelUrl(attachService.getAttachOpenUrl(entity.getChannel().getAttachId()));
+        dto.setShareCount(entity.getSharedCount());
+
+        List<VideoTagEntity> list = videoTagRepository.findAllByVideo(entity);
+        List<TagDTO> tagDTOS = new ArrayList<>();
+
+        list.forEach(videoTagEntity -> {
+            tagDTOS.add(new TagDTO(videoTagEntity.getTagId(),videoTagEntity.getTag().getName()));
+        });
+
+        VideoViewLikeDislikeCountAndStatusByProfile count =
+                videoWatchedRepository.count(entity.getUuid(), profile.getId());
+        dto.setViewCount(count.getViewCount());
+        dto.setLikeCount(count.getLikeCount());
+        dto.setDislikeCount(count.getDislikeCount());
+        dto.setStatus(LikeStatus.valueOf(count.getStatus()));
+
+        return dto;
+
+    }
+
+    public List<VideoShortInfoDTO> pagination(Integer size, Integer page) {
+
+        List<VideoShortInfo> all = videoRepository.paginationForAdmin(page, size);
+
+        List<VideoShortInfoDTO> dtoList = new LinkedList<>();
+
+        all.forEach(info -> {
+            dtoList.add(new VideoShortInfoDTO(info.getVideoId(),info.getVideoName(),
+                    attachService.getAttachOpenUrl(info.getVideoReviewId()), info.getViewCount()));
+        });
+
+        return dtoList;
+    }
+
+
+    public List<VideoShortInfoDTO> searchByChannel(String channelId, Integer size, Integer page) {
+
+        List<VideoShortInfo> search = videoRepository.searchByChannel(channelId, size, page * size);
+
+        List<VideoShortInfoDTO> dtos = new ArrayList<>();
+        search.forEach(info -> {
+            dtos.add(new VideoShortInfoDTO(info.getVideoId(),info.getVideoName(),
+                    attachService.getAttachOpenUrl(info.getVideoReviewId()), info.getViewCount()));
+        });
+
+        return dtos;
     }
 }

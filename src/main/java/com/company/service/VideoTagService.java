@@ -53,7 +53,7 @@ public class VideoTagService {
         for (VideoTagEntity entity : all) {
             VideoTagDTO dto = new VideoTagDTO();
             dto.setId(entity.getId());
-            dto.setVideo(entity.getVideo().getId());
+            dto.setVideo(entity.getVideo().getUuid());
             dto.setTag(entity.getTag().getId());
             dto.setCreatedDate(entity.getCreatedDate());
 

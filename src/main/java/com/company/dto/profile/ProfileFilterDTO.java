@@ -14,4 +14,10 @@ public class ProfileFilterDTO {
     private ProfileStatus status;
     private ProfileRole role;
     private String jwt;
+
+    private String username;
+    private String password;
+    private String createdDateFrom;
+    private String createdDateTo;
+    private Boolean visible;
 }

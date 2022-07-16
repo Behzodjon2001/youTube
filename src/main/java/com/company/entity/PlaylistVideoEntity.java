@@ -14,8 +14,10 @@ public class PlaylistVideoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "playlist_id")
+    private String playlistId;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "playlist_id")
+    @JoinColumn(name = "playlist_id", nullable = false, insertable = false, updatable = false)
     private PlaylistEntity playlist;
 
     @ManyToOne(fetch = FetchType.LAZY)
