@@ -189,27 +189,26 @@ public class PlaylistService {
         return playlistShortInfoDTOS;
     }
 
-    public PlaylistFullDTO getPlaylistVideosByPlaylistId(String playlistId) {
-
-        List<PlaylistFullInfo> list = playlistRepository.playlistFullInfoList(playlistId);
-
-        PlaylistFullDTO dto = new PlaylistFullDTO();
-        dto.setPlaylistId(list.get(0).getPlaylistId());
-        dto.setPlaylistName(list.get(0).getPlaylistName());
-
-        int playlistViewCount = 0;
-
-        List<VideoShortInfoDTO> dtos = new ArrayList<>();
-
-        for (PlaylistFullInfo playlistFullInfo : list) {
-            dtos.add(new VideoShortInfoDTO(playlistFullInfo.getVideoId(), playlistFullInfo.getVideoName(),
-                    attachService.getAttachOpenUrl(playlistFullInfo.getReviewId()), playlistFullInfo.getViewCount()));
-
-            playlistViewCount += playlistFullInfo.getViewCount();
+    public PlaylistShortInfoDTO getPlaylistVideosByPlaylistId(Integer playlistId) {
+        Optional<PlaylistShortInfo> info = playlistRepository.getPlaylistShortInfoWithTotalWatchedCount(playlistId);
+        if (info.isEmpty()) {
+            throw new BadRequestException("Playlist empty");
         }
+        PlaylistShortInfo info1 = info.get();
+        PlaylistShortInfoDTO dto = new PlaylistShortInfoDTO();
+        dto.setPlaylistId(info1.getPlaylistId());
+        dto.setPlaylistName(info1.getPlaylistName());
+        dto.setPlaylistCreatedDate(info1.getPlaylistCreatedDate());
+        dto.setChannelId(info1.getChannelId());
+        dto.setCountVideo(info1.getCountVideo());
 
-        dto.setPlaylistViewCount(playlistViewCount);
-        dto.setVideoShortInfoDTOS(dtos);
+//        Integer getPlaylistId();
+//        String getPlaylistName();
+//        LocalDateTime getPlaylistCreatedDate();
+//        String getChannelId();
+//        String getChannelName();
+//        Integer getCountVideo();
+
 
         return dto;
     }

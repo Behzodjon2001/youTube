@@ -59,16 +59,16 @@ public class VideoService {
         entity.setStatus(dto.getStatus());
         entity.setType(dto.getType());
 
-        AttachEntity attach = attachService.get(dto.getAttach());
+        AttachEntity attach = attachService.get(dto.getAttach().getId());
         entity.setAttach(attach);
 
-        AttachEntity review = attachService.get(dto.getReview());
+        AttachEntity review = attachService.get(dto.getReview().getId());
         entity.setReview(review);
 
-        ChannelEntity channel = channelService.get(dto.getChannel());
+        ChannelEntity channel = channelService.get(dto.getChannel().getId());
         entity.setChannel(channel);
 
-        CategoryEntity category = categoryService.get(dto.getCategory());
+        CategoryEntity category = categoryService.get(dto.getCategory().getId());
         entity.setCategory(category);
 
 
@@ -98,16 +98,16 @@ public class VideoService {
         entity.setPublishedDate(LocalDateTime.now());
         entity.setType(dto.getType());
 
-        AttachEntity attach = attachService.get(dto.getAttach());
+        AttachEntity attach = attachService.get(dto.getAttach().getId());
         entity.setAttach(attach);
 
-        AttachEntity review = attachService.get(dto.getReview());
+        AttachEntity review = attachService.get(dto.getReview().getId());
         entity.setReview(review);
 
-        ChannelEntity channel = channelService.get(dto.getChannel());
+        ChannelEntity channel = channelService.get(dto.getChannel().getId());
         entity.setChannel(channel);
 
-        CategoryEntity category = categoryService.get(dto.getCategory());
+        CategoryEntity category = categoryService.get(dto.getCategory().getId());
         entity.setCategory(category);
 
         return videoRepository.save(entity);

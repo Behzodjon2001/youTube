@@ -2,6 +2,7 @@ package com.company.entity;
 
 import com.company.entity.video.VideoEntity;
 import com.company.enums.LikeStatus;
+import com.company.enums.VideoStatus;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -37,7 +38,7 @@ public class ProfileWatchedVideoEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private LikeStatus status = LikeStatus.NULL;
+    private LikeStatus status;
 
     @Column(nullable = false)
     private LocalDateTime createdDate = LocalDateTime.now();

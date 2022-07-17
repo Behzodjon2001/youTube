@@ -71,12 +71,12 @@ public class CommentService {
     }
 
     public List<CommentDTO> list(VideoDTO dto) {
-        boolean existArticle = videoService.isExistArticle(dto.getId());
+        boolean existArticle = videoService.isExistArticle(dto.getUuid());
         if (!existArticle) {
             log.error("Article not found {}" , dto);
             throw new ItemNotFoundException("Video not found");
         }
-        VideoEntity entity = new VideoEntity(dto.getId());
+        VideoEntity entity = new VideoEntity(dto.getUuid());
         List<CommentEntity> commentEntityList = commentRepository.findByVideo(entity);
 
         return entityToDtoList(commentEntityList);

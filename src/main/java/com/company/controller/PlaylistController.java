@@ -103,10 +103,10 @@ public class PlaylistController {
     }
 
     @GetMapping("/public/playlist/{playlistId}")
-    public ResponseEntity<?> playlistByPlaylistId(@PathVariable("playlistId") String playlistId){
+    public ResponseEntity<?> playlistByPlaylistId(@PathVariable("playlistId") Integer playlistId){
 
-        playlistService.getPlaylistVideosByPlaylistId(playlistId);
+        PlaylistShortInfoDTO playlistVideosByPlaylistId = playlistService.getPlaylistVideosByPlaylistId(playlistId);
 
-        return ResponseEntity.ok("success");
+        return ResponseEntity.ok().body(playlistVideosByPlaylistId);
     }
 }

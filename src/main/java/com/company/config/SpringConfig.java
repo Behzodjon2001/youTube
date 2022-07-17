@@ -84,7 +84,7 @@ public class SpringConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/video/public/*").permitAll()
                 .antMatchers("/tag/list").permitAll()
                 .antMatchers("/tag/adm/*").hasRole("ADMIN")
-                .antMatchers("/video_watch/*","/video_watch").hasRole("ADMIN")
+                .antMatchers("/video_watch/create").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

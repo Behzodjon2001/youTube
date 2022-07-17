@@ -68,4 +68,21 @@ Authorization: Bearer
 
 ###
 
-GET localhost:8080/video/public/pagination?page=0&size=10
+GET localhost:8080/video/public/pagination?categoryId=8&page=0&size=10
+
+###
+
+GET localhost:8080/video/public/search_text?search_text=Tom and jerry&page=0&size=10
+
+###
+
+GET localhost:8080/video/adnOwn/8a8a83fb81f607a50181f6083e3c0000
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTgwMzQ4MjYsImV4cCI6MTY1ODI1MDgyNiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo1LCJyb2xlIjoiUk9MRV9BRE1JTiJ9.5yh7rq4ozL8yxPhiEcdzFj3oMp0hAhxW692SHC87HBM
+
+###
+
+GET localhost:8080/video/adm/pagination?page=0&size=10
+
+###
+
+GET localhost:8080/video/public/search_channel?channleId=402866d181f0e8fa0181f0eab1430000&page=0&size=10

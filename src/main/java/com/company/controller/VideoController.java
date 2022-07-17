@@ -89,18 +89,18 @@ public class VideoController {
 
     @GetMapping("/public/pagination")
     public ResponseEntity<?> pagination(@RequestParam("categoryId") Integer categoryId,
-                                        @RequestParam("size") Integer size,
-                                        @RequestParam("page") Integer page) {
+                                        @RequestParam("page") Integer page,
+                                        @RequestParam("size") Integer size) {
 
         List<VideoShortInfoDTO> dtos = videoService.searchByCategory(categoryId, size, page);
         return ResponseEntity.ok(dtos);
 
     }
 
-    @GetMapping("/public/search_title")
+    @GetMapping("/public/search_text")
     public ResponseEntity<?> pagination(@RequestParam("search_text") String text,
-                                        @RequestParam("size") Integer size,
-                                        @RequestParam("page") Integer page) {
+                                        @RequestParam("page") Integer page,
+                                        @RequestParam("size") Integer size) {
 
         List<VideoShortInfoDTO> dtos = videoService.searchByName(text, size, page);
         return ResponseEntity.ok(dtos);

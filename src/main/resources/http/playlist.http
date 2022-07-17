@@ -31,6 +31,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc5NzU0MTIsImV4cCI6MTY1O
 GET http://localhost:8080/playlist/public/channel/8a8a83fb81f632e20181f6388f900000
 #Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc5NzU0MTIsImV4cCI6MTY1ODE5MTQxMiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo4LCJyb2xlIjoiUk9MRV9VU0VSIn0.ZFkXV97UynFf2mFC4fIueLcYZ4x4MCGXz79OnjZ0Rsc
 
+###
+
+GET http://localhost:8080/playlist/public/playlist/2
+#Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc5NzU0MTIsImV4cCI6MTY1ODE5MTQxMiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjo4LCJyb2xlIjoiUk9MRV9VU0VSIn0.ZFkXV97UynFf2mFC4fIueLcYZ4x4MCGXz79OnjZ0Rsc
+
 
 ###
 

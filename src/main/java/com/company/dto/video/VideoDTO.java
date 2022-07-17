@@ -1,38 +1,54 @@
 package com.company.dto.video;
 
+import com.company.entity.CategoryEntity;
+import com.company.entity.ChannelEntity;
+import com.company.entity.attach.AttachEntity;
 import com.company.enums.VideoStatus;
 import com.company.enums.VideoType;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
 public class VideoDTO {
-    private String id;
+    private String uuid;
 
-    private String key;
-
-    private String review;
+    private String name;
 
     private String title;
 
-    private String category;
+    private String description;
 
-    private String attach;
+    private String attachId;
+
+    private AttachEntity attach;
+
+    private String reviewId;
+
+    private AttachEntity review;
+
+    private String channelId;
+
+    private ChannelEntity channel;
+
+    private Integer categoryId;
+
+    private CategoryEntity category;
 
     private LocalDateTime createdDate = LocalDateTime.now();
 
     private LocalDateTime publishedDate;
 
-    private VideoStatus status;
+    private Integer time;
 
     private VideoType type;
 
-    private Integer viewCount = 0;
-
     private Integer sharedCount = 0;
 
-    private String description;
+    private Boolean visible = Boolean.TRUE;
 
-    private String channel;
+    private VideoStatus status = VideoStatus.PUBLIC;
+
+    private String key;
 }

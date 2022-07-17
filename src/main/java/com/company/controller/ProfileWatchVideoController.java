@@ -16,7 +16,7 @@ public class ProfileWatchVideoController {
     @Autowired
     private VideoWatchedService videoWatchedService;
 
-    @PostMapping("")
+    @PostMapping("/create")
     public ResponseEntity<?> created(@RequestBody VideoWatchedDTO dto){
 
         ResponseInfoDTO created = videoWatchedService.created(dto);
