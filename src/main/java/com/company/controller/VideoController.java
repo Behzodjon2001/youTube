@@ -107,7 +107,7 @@ public class VideoController {
 
     }
 
-    @GetMapping("/public/search_tag")
+    @GetMapping("/public/tagId")
     public ResponseEntity<?> paginationByTag(@RequestParam("tagId") Integer tagId,
                                              @RequestParam("size") Integer size,
                                              @RequestParam("page") Integer page) {
@@ -127,8 +127,8 @@ public class VideoController {
     }
 
     @GetMapping("/adm/pagination")
-    public ResponseEntity<?> pagination(@RequestParam("size") Integer size,
-                                        @RequestParam("page") Integer page) {
+    public ResponseEntity<?> pagination(@RequestParam("page") Integer page,
+                                        @RequestParam("size") Integer size) {
 
         List<VideoShortInfoDTO> dtos = videoService.pagination(size, page);
         return ResponseEntity.ok(dtos);

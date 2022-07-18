@@ -38,6 +38,7 @@ public class PlaylistVideoService {
         entity.setVideo(video);
         entity.setCreatedDate(LocalDateTime.now());
         entity.setOrderNum(dto.getOrderNum());
+        entity.setPlaylistId(dto.getPlaylist());
         playlistVideoRepository.save(entity);
 
         dto.setCreatedDate(entity.getCreatedDate());
@@ -68,7 +69,7 @@ public class PlaylistVideoService {
 
         VideoEntity video = videoService.get(dto.getVideo());
         entity.setVideo(video);
-        entity.setCreatedDate(LocalDateTime.now());
+        entity.setUpdatedDate(LocalDateTime.now());
         entity.setOrderNum(dto.getOrderNum());
 
         playlistVideoRepository.save(entity);
@@ -87,7 +88,9 @@ public class PlaylistVideoService {
             log.error("This category not found {}" , id);
             throw new BadRequestException("This category not found");
         }
-        playlistVideoRepository.deleteById(id);
+        PlaylistVideoEntity playlistVideoEntity = optional.get();
+        playlistVideoEntity.setVisible(false);
+        playlistVideoRepository.save(playlistVideoEntity);
     }
 
 

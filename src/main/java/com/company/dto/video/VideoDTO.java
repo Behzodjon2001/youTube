@@ -9,6 +9,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class VideoDTO {
@@ -20,23 +21,15 @@ public class VideoDTO {
 
     private String description;
 
-    private String attachId;
+    private String attach;
 
-    private AttachEntity attach;
+    private String review;
 
-    private String reviewId;
+    private String channel;
 
-    private AttachEntity review;
+    private String category;
 
-    private String channelId;
-
-    private ChannelEntity channel;
-
-    private Integer categoryId;
-
-    private CategoryEntity category;
-
-    private LocalDateTime createdDate = LocalDateTime.now();
+    private LocalDateTime createdDate;
 
     private LocalDateTime publishedDate;
 
@@ -44,11 +37,13 @@ public class VideoDTO {
 
     private VideoType type;
 
-    private Integer sharedCount = 0;
+    private List<String> tags;
 
-    private Boolean visible = Boolean.TRUE;
+    private Integer sharedCount;
 
-    private VideoStatus status = VideoStatus.PUBLIC;
+    private Boolean visible;
+
+    private VideoStatus status;
 
     private String key;
 }

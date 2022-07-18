@@ -10,6 +10,7 @@ import com.company.exception.ItemNotFoundException;
 import com.company.repository.ChannelRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,8 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class ChannelService {
+    @Value("${server.url}")
+    private String serverUrl;
     @Autowired
     private AttachService attachService;
     @Autowired
@@ -203,6 +206,10 @@ public class ChannelService {
             log.error("article  not found {}" , id);
             throw new ItemNotFoundException("Article not found");
         });
+    }
+
+    public String getChannelOpenUrl(String uuid){
+        return   serverUrl + "attach/open?fileId=" + uuid;
     }
 
 

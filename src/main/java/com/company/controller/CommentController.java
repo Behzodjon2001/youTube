@@ -69,4 +69,12 @@ public class CommentController {
         List<CommentDTO> list = commentService.listById(id);
         return ResponseEntity.ok().body(list);
     }
+
+    @ApiOperation(value = "list By Channel", notes="Method for list By Channel")
+    @GetMapping("/public/comments")
+    public ResponseEntity<?> listByProfile() {
+          log.info("Request for listByCategory {}" );
+        List<CommentDTO> list = commentService.listByProfile();
+        return ResponseEntity.ok().body(list);
+    }
 }

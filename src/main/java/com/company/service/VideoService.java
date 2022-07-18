@@ -5,11 +5,8 @@ import com.company.dto.VideoShortInfoDTO;
 import com.company.dto.tag.TagDTO;
 import com.company.dto.video.VideoDTO;
 import com.company.dto.video.VideoFullInfoDTO;
-import com.company.entity.CategoryEntity;
-import com.company.entity.ChannelEntity;
-import com.company.entity.PlaylistEntity;
+import com.company.entity.*;
 import com.company.entity.video.VideoEntity;
-import com.company.entity.ProfileEntity;
 import com.company.entity.attach.AttachEntity;
 import com.company.entity.video.VideoTagEntity;
 import com.company.enums.LikeStatus;
@@ -49,6 +46,8 @@ public class VideoService {
     private VideoTagRepository videoTagRepository;
     @Autowired
     private VideoWatchedRepository videoWatchedRepository;
+    @Autowired
+    private TagService tagService;
 
     public VideoDTO create(VideoDTO dto, Integer profileId) {
         VideoEntity entity = new VideoEntity();
@@ -58,18 +57,20 @@ public class VideoService {
         entity.setPublishedDate(null);
         entity.setStatus(dto.getStatus());
         entity.setType(dto.getType());
+        entity.setName(dto.getName());
+        entity.setKey(dto.getKey());
 
-        AttachEntity attach = attachService.get(dto.getAttach().getId());
-        entity.setAttach(attach);
+        AttachEntity attach = attachService.get(dto.getAttach());
+        entity.setAttachId(attach.getId());
 
-        AttachEntity review = attachService.get(dto.getReview().getId());
-        entity.setReview(review);
+        AttachEntity review = attachService.get(dto.getReview());
+        entity.setReviewId(review.getId());
 
-        ChannelEntity channel = channelService.get(dto.getChannel().getId());
-        entity.setChannel(channel);
+        ChannelEntity channel = channelService.get(dto.getChannel());
+        entity.setChannelId(channel.getId());
 
-        CategoryEntity category = categoryService.get(dto.getCategory().getId());
-        entity.setCategory(category);
+        CategoryEntity category = categoryService.get(dto.getCategory());
+        entity.setCategoryId(category.getId());
 
 
         videoRepository.save(entity);
@@ -77,11 +78,17 @@ public class VideoService {
         VideoDTO articleDTO = new VideoDTO();
         articleDTO.setTitle(entity.getTitle());
         articleDTO.setDescription(entity.getDescription());
-        //  articleDTO.setRegionEntity(entity.getRegion());
         articleDTO.setStatus(entity.getStatus());
-        // articleDTO.setCategoryEntity(entity.getCategory());
-        //  articleDTO.setModerator(entity.getModerator());
 
+        dto.getTags().forEach(tag -> {
+            TagEntity tagEntity = tagService.createdIfNotExist(tag);
+            VideoTagEntity videoTag = new VideoTagEntity();
+
+            videoTag.setVideoId(entity.getUuid());
+            videoTag.setTagId(tagEntity.getId());
+
+            videoTagRepository.save(videoTag);
+        });
         return articleDTO;
     }
 
@@ -98,17 +105,17 @@ public class VideoService {
         entity.setPublishedDate(LocalDateTime.now());
         entity.setType(dto.getType());
 
-        AttachEntity attach = attachService.get(dto.getAttach().getId());
-        entity.setAttach(attach);
+        AttachEntity attach = attachService.get(dto.getAttach());
+        entity.setAttachId(attach.getId());
 
-        AttachEntity review = attachService.get(dto.getReview().getId());
-        entity.setReview(review);
+        AttachEntity review = attachService.get(dto.getReview());
+        entity.setReviewId(review.getId());
 
-        ChannelEntity channel = channelService.get(dto.getChannel().getId());
-        entity.setChannel(channel);
+        ChannelEntity channel = channelService.get(dto.getChannel());
+        entity.setChannelId(channel.getId());
 
-        CategoryEntity category = categoryService.get(dto.getCategory().getId());
-        entity.setCategory(category);
+        CategoryEntity category = categoryService.get(dto.getCategory());
+        entity.setCategoryId(category.getId());
 
         return videoRepository.save(entity);
     }

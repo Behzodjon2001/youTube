@@ -5,6 +5,7 @@ import com.company.enums.NotificationTypeStatus;
 import com.company.enums.SubscriptionStatus;
 import com.company.enums.VideoStatus;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,12 +15,13 @@ import java.time.LocalDateTime;
 @Table(name = "subscription")
 public class SubscriptionEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "video_id")
-    private VideoEntity video;
+    @JoinColumn(name = "channel_id")
+    private ChannelEntity channel;
 
     @JoinColumn(nullable = false, name = "profile_id")
     @ManyToOne(targetEntity = ProfileEntity.class, fetch = FetchType.LAZY)

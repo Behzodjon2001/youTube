@@ -18,12 +18,6 @@ Content-Disposition: form-data; name="file"; filename="lanbargine.jpg"
 < C:\Users\Acer\Downloads\lanbargine.jpg
 
 
-
-# "tagList": [
-#    "sotsial",
-#    "d2as"
-#  ]
-
 ###
 
 GET localhost:8080/attach/admUser/pagination?page=0&size=10

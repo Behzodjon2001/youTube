@@ -12,12 +12,11 @@ import java.time.LocalDateTime;
 @Table(name = "playlist_video")
 public class PlaylistVideoEntity {
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(name = "playlist_id")
-    private String playlistId;
+    private Integer playlistId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "playlist_id", nullable = false, insertable = false, updatable = false)
     private PlaylistEntity playlist;
@@ -28,6 +27,9 @@ public class PlaylistVideoEntity {
 
     @Column(nullable = false, name = "created_date")
     private LocalDateTime createdDate = LocalDateTime.now();
+
+    @Column(name = "updated_date")
+    private LocalDateTime updatedDate;
 
     @Column
     private Integer orderNum;

@@ -34,14 +34,13 @@ public class PlaylistVideoController {
         return ResponseEntity.ok().body(list);
     }
 
-//    @PutMapping("/userOwn/update/{id}")
-//    public ResponseEntity<?> update(@RequestParam(value = "page", defaultValue = "0") int page,
-//                                    @RequestParam(value = "size", defaultValue = "2") int size) {
-//        log.info("Request for update {}" , dto, id);
-////        HttpHeaderUtil.getId(request, ProfileRole.ADMIN);
-//        playlistVideoService.update(dto,id);
-//        return ResponseEntity.ok().body("Successfully updated");
-//    }
+    @PutMapping("/userOwn/update/{id}")
+    public ResponseEntity<?> update(@RequestBody PlaylistVideoDTO dto, @PathVariable("id") Integer id) {
+        log.info("Request for update {}" , dto, id);
+//        HttpHeaderUtil.getId(request, ProfileRole.ADMIN);
+        playlistVideoService.update(dto,id);
+        return ResponseEntity.ok().body("Successfully updated");
+    }
 
     @DeleteMapping("/userOwn/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {

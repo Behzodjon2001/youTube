@@ -138,6 +138,35 @@ public class CommentService {
         return new PageImpl<>(dtoList, pageable, all.getTotalElements());
     }
 
+    public List<CommentDTO> listByProfile() {
+        List<CommentEntity> optional = commentRepository.findByProfileId(profileService.getProfile().getId());
+        if (optional.isEmpty()){
+            log.error("published channel not found {}" );
+            throw new ItemNotFoundException("Not found!");
+        }
+        List<CommentDTO> list = new LinkedList<>();
+        for (CommentEntity ent : optional) {
+            CommentDTO dto = new CommentDTO();
+            dto.setContent(ent.getContent());
+
+//            ProfileEntity profile = profileService.get();
+            dto.setProfile(ent.getProfile().getId());
+
+//            VideoEntity video = videoService.get(ent.getVideo().getId());
+            dto.setVideo(ent.getVideo().getUuid());
+
+            dto.setUpdateDate(ent.getUpdateDate());
+//            dto.setReply(ent.getReply().getId());
+            dto.setCreatedDate(ent.getCreatedDate());
+            dto.setVisible(ent.getVisible());
+
+
+            list.add(dto);
+        }
+        return list;
+
+    }
+
     public List<CommentDTO> listById(Integer cId) {
         List<CommentEntity> optional = commentRepository.findByProfileId(cId);
         if (optional.isEmpty()){
