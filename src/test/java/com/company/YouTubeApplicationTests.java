@@ -72,5 +72,11 @@ class YouTubeApplicationTests {
                 .authenticate(new UsernamePasswordAuthenticationToken("admin@mail.to", 123));
         System.out.println(authenticate);
     }
+    @Test
+    void R4Test(){
+        Authentication authenticate = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken("admin@mail.to", 123));
+        System.out.println(authenticate);
+    }
 
 }
