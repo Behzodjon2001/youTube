@@ -16,6 +16,9 @@ import com.company.util.MD5Util;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,15 +34,15 @@ class YouTubeApplicationTests {
 
     @Test
     void createProfile() {
-//        ProfileDTO profile = new ProfileDTO();
-//        profile.setName("Adminjon");
-//        profile.setSurname("Adminjonov");
-//        profile.setEmail("admin@mail.tu");
-//        profile.setPhone("+998914640908");
-//        profile.setPassword(MD5Util.getMd5("123"));
-//        profile.setAttachId("64c24aa1-eddd-4417-9c1e-2c2f38489fd1");
-//        profile.setRole(ProfileRole.ROLE_ADMIN);
-//        profileService.create(profile);
+        ProfileDTO profile = new ProfileDTO();
+        profile.setName("Adminjon");
+        profile.setSurname("Adminjonov");
+        profile.setEmail("admin@mail.tu");
+        profile.setPhone("+998914640908");
+        profile.setPassword("123");
+        profile.setAttachId("402880ea840a2b6a01840a2be7ea0000");
+        profile.setRole(ProfileRole.ROLE_ADMIN);
+        profileService.create(profile);
 
 //        List<PlaylistEntity> byProfileId = playlistRepository.findByProfileId(5);
 //        List<PlaylistEntity> list = new ArrayList<>();
@@ -51,14 +54,23 @@ class YouTubeApplicationTests {
 
 
 
-            ProfileWatchedVideoEntity entity = new ProfileWatchedVideoEntity();
-            entity.setVideoId("8a8a83fb81f5facd0181f5fd6e1c0000");
-            entity.setProfileId(5);
-            entity.setStatus(LikeStatus.valueOf("LIKE"));
+//            ProfileWatchedVideoEntity entity = new ProfileWatchedVideoEntity();
+//            entity.setVideoId("8a8a83fb81f64e6b0181f64eb1a80000");
+//            entity.setProfileId(5);
+//            entity.setStatus(LikeStatus.valueOf("LIKE"));
 
-            videoWatchedRepository.save(entity);
+//            videoWatchedRepository.save(entity);
 
 
+    }
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Test
+    void RTest(){
+        Authentication authenticate = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken("admin@mail.to", 123));
+        System.out.println(authenticate);
     }
 
 }
